@@ -2,6 +2,7 @@ package com.example.testinunit;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,6 +58,17 @@ public class ListMockTest {
 
         assertEquals("Something1", allValues.get(0));
         assertEquals("Something2", allValues.get(1));
+
+    }
+
+    @Test
+    public void spying(){
+        ArrayList mockArrayList= mock(ArrayList.class);
+        mockArrayList.get(0);
+        mockArrayList.size();
+        mockArrayList.add("Test");
+        mockArrayList.add("Test2");
+        mockArrayList.size();
 
     }
 }
