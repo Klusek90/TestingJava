@@ -3,6 +3,7 @@ package com.example.testinunit.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name="item")
@@ -12,6 +13,11 @@ public class Item {
     private String name;
     private int value;
     private int quantity;
+
+
+
+    @Transient //not save in database
+    private int total;
 
     public Item(Long id, String name, int value, int quantity) {
         this.id = id;
@@ -53,5 +59,13 @@ public class Item {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 }

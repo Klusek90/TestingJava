@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class HelloTest {
     @Autowired
@@ -17,8 +19,18 @@ public class HelloTest {
 
     @GetMapping("/item")
     public Item getItem(){
-        Item item = new Item(1L,"name", 12,23);
-        String name = itemService.retriveHardcodededItem(item);
+      Item item = new Item(9L,"costam",23,23);
+      itemService.retriveHardcodededItem(item);
        return item;
+    }
+
+    @GetMapping("/all")
+    public List<Item> retriveThemALl(){
+        return itemService.retriveAll();
+    }
+
+    @GetMapping("/one")
+    public Item retriveOneItem(){
+        return itemService.retriveOne();
     }
 }
