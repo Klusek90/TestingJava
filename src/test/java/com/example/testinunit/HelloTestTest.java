@@ -2,6 +2,8 @@ package com.example.testinunit;
 
 import com.example.testinunit.entity.Item;
 import com.example.testinunit.service.ItemService;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -73,6 +76,24 @@ class HelloTestTest {
                 .andExpect(content().json("[{\"id\": 3, \"name\": \"Hoe\", \"value\": 30,\"quantity\": 20}," +
                                                      "{\"id\": 2, \"name\": \"Bill\", \"value\": 23,\"quantity\": 43}]"))
                 .andReturn();
+    }
+
+    @Test
+    public void Jsonlearning(){
+        String responseFromService = "[{\"id\":\"12\",\"name\":\"Joe\",\"value\":130},\n" +
+                                     "{\"id\":\"13\",\"name\":\"Jack\",\"value\":150},\n" +
+                                     "{\"id\":\"14\",\"name\":\"Greg\",\"value\":200}]";
+
+        DocumentContext context= JsonPath.parse(responseFromService);
+        //$ is the root
+        int length = context.read("$.length()");
+
+        assertThat(length).isEqualTo(3);
+
+        //extract from json
+        System.out.println(context.read("$..id").toString());
+        //there a can also be elements of
+        System.out.println("There is my value pulled extract with new way: " + context.read("$.[?(@.name=='Greg')]").toString());
     }
 
 }
