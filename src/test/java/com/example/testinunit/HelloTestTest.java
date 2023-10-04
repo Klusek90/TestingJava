@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -52,7 +54,25 @@ class HelloTestTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"id\": 2, \"name\": \"Bill\", \"value\": 23,\"quantity\": 43}"))
                 .andReturn();
-//        assertEquals("hello my new test",result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void retriveAllITemsTest() throws  Exception{
+        //testing all by creating arry and compare it with array
+        when(itemService.retriveAll()).thenReturn(
+                Arrays.asList(new Item (2l,"Bill",23,43),
+                              new Item (3l,"Hoe",30,20)));
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/all")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(request)
+                .andExpect(status().isOk())
+                                                      //sequence not matter
+                .andExpect(content().json("[{\"id\": 3, \"name\": \"Hoe\", \"value\": 30,\"quantity\": 20}," +
+                                                     "{\"id\": 2, \"name\": \"Bill\", \"value\": 23,\"quantity\": 43}]"))
+                .andReturn();
     }
 
 }
